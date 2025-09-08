@@ -1,42 +1,33 @@
 import pandas as pd
 
-input_file = 'emails/emails.csv'   
-output_file = 'emails/emails_cleaned.csv'
+# Load the CSV dataset
+df = pd.read_csv("emails/emails.csv")  # Use your actual filename/path
 
-chunksize = 10000  # Adjust based on your memory capacity
+# Drop rows with missing data in either 'file' or 'message'
+df_clean = df.dropna(subset=["file", "message"])
 
-def is_forwarded(subject):
-    if isinstance(subject, str):
-        return subject.lower().startswith(('fw:', 'fwd:', 'fw -', 'fwd -'))
-    return False
+# Shuffle the DataFrame
+df_shuffled = df_clean.sample(frac=1, random_state=42).reset_index(drop=True)
 
-def is_automated_reply(body):
-    if isinstance(body, str):
-        keywords = ['auto reply', 'automatic reply', 'out of office', 'do not reply', 'automatic response', 'no-reply']
-        body_lower = body.lower()
-        return any(keyword in body_lower for keyword in keywords)
-    return False
+# Split 80% train / 20% test
+train_frac = 0.8
+train_size = int(len(df_shuffled) * train_frac)
 
-write_header = True  # Write header only for first chunk
+df_train = df_shuffled.iloc[:train_size]
+df_test = df_shuffled.iloc[train_size:]
 
-for chunk in pd.read_csv(input_file, chunksize=chunksize):
-    # Normalize column names to lower case and strip spaces if needed
-    chunk.columns = chunk.columns.str.strip().str.lower()
+# Format rows as 'body [SEP] subject'
+def format_line(row):
+    return f"{row['message'].strip()} [SEP] {row['file'].strip()}"
 
-    # Filter out forwarded emails using 'file' column as subject
-    chunk = chunk[~chunk['file'].apply(is_forwarded)]
+# Write to train.txt
+with open("train.txt", "w", encoding="utf-8") as trainfile:
+    for _, row in df_train.iterrows():
+        trainfile.write(format_line(row) + "\n")
 
-    # Filter out automated replies using 'message' column as body
-    chunk = chunk[~chunk['message'].apply(is_automated_reply)]
+# Write to test.txt
+with open("test.txt", "w", encoding="utf-8") as testfile:
+    for _, row in df_test.iterrows():
+        testfile.write(format_line(row) + "\n")
 
-    # Drop rows with missing 'file' or 'message'
-    chunk = chunk.dropna(subset=['file', 'message'])
-
-    # Filter out very short content to remove noise
-    chunk = chunk[(chunk['file'].str.len() > 5) & (chunk['message'].str.len() > 20)]
-
-    # Append cleaned chunk to output CSV
-    chunk.to_csv(output_file, mode='w' if write_header else 'a', index=False, header=write_header)
-    write_header = False
-
-print(f"Cleaning complete. Cleaned data saved to: {output_file}")
+print(f"Saved {len(df_train)} lines in train.txt and {len(df_test)} lines in test.txt.")
