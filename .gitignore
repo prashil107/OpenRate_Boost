@@ -1,3 +1,4 @@
 emails/emails_cleaned.csv
 emails/emails.csv
 *.txt
+/gpt2_enron_subjects
