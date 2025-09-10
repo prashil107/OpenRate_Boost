@@ -29,15 +29,15 @@ Dataset Preparation
 
 2.Convert CSV into plain text files for training/testing using:
 
-   *Each line: [body text] [SEP] [subject line]
+   -Each line: [body text] [SEP] [subject line]
 
-   *Use scripts provided (see data_prep.py for details).
+   -Use scripts provided (see data_prep.py for details).
 
 Installation
 
     python -m pip install --upgrade transformers torch accelerate pandas datasets
 Usage
-*Step-by-step Workflow
+-Step-by-step Workflow
 
 1. Prepare Data
    ``` python
