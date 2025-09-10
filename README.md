@@ -29,32 +29,32 @@ Dataset Preparation
 
 2.Convert CSV into plain text files for training/testing using:
 
-    Each line: [body text] [SEP] [subject line]
+   Each line: [body text] [SEP] [subject line]
 
-    Use scripts provided (see data_prep.py for details).
+   Use scripts provided (see data_prep.py for details).
 
 Installation
-text
-python -m pip install --upgrade transformers torch accelerate pandas datasets
+
+    python -m pip install --upgrade transformers torch accelerate pandas datasets
 Usage
+
+
 Step-by-step Workflow
+
 1. Prepare Data
-python
-import pandas as pd
-
-df = pd.read_csv("emails.csv")
-df_clean = df.dropna(subset=["file", "message"]).sample(frac=1, random_state=42)
-split_idx = int(len(df_clean) * 0.8)
-df_train = df_clean.iloc[:split_idx]
-df_test = df_clean.iloc[split_idx:]
-
-def format_line(row):
-    return f"{row['message'].strip()} [SEP] {row['file'].strip()}"
-
-with open("train.txt", "w", encoding="utf-8") as trainf:
-    for _, row in df_train.iterrows(): trainf.write(format_line(row) + "\n")
-with open("test.txt", "w", encoding="utf-8") as testf:
-    for _, row in df_test.iterrows(): testf.write(format_line(row) + "\n")
+    python
+    import pandas as pd
+    df = pd.read_csv("emails.csv")
+    df_clean = df.dropna(subset=["file", "message"]).sample(frac=1, random_state=42)
+    split_idx = int(len(df_clean) * 0.8)
+    df_train = df_clean.iloc[:split_idx]
+    df_test = df_clean.iloc[split_idx:]
+    def format_line(row):
+        return f"{row['message'].strip()} [SEP] {row['file'].strip()}"
+    with open("train.txt", "w", encoding="utf-8") as trainf:
+        for _, row in df_train.iterrows(): trainf.write(format_line(row) + "\n")
+    with open("test.txt", "w", encoding="utf-8") as testf:
+        for _, row in df_test.iterrows(): testf.write(format_line(row) + "\n")
 2. Fine-tune GPT-2
 python
 from transformers import GPT2Tokenizer, GPT2LMHeadModel, TrainingArguments, Trainer, DataCollatorForLanguageModeling
