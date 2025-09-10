@@ -42,7 +42,7 @@ Usage
 Step-by-step Workflow
 
 1. Prepare Data
-    python
+   ` python
     import pandas as pd
     df = pd.read_csv("emails.csv")
     df_clean = df.dropna(subset=["file", "message"]).sample(frac=1, random_state=42)
@@ -54,9 +54,11 @@ Step-by-step Workflow
     with open("train.txt", "w", encoding="utf-8") as trainf:
         for _, row in df_train.iterrows(): trainf.write(format_line(row) + "\n")
     with open("test.txt", "w", encoding="utf-8") as testf:
-        for _, row in df_test.iterrows(): testf.write(format_line(row) + "\n")
+        for _, row in df_test.iterrows(): testf.write(format_line(row) + "\n")`
+
+
 2. Fine-tune GPT-2
-python
+`python
 from transformers import GPT2Tokenizer, GPT2LMHeadModel, TrainingArguments, Trainer, DataCollatorForLanguageModeling
 from datasets import load_dataset
 
@@ -92,15 +94,17 @@ trainer = Trainer(
 
 trainer.train()
 trainer.save_model("./gpt2_enron_subjects")
-tokenizer.save_pretrained("./gpt2_enron_subjects")
+tokenizer.save_pretrained("./gpt2_enron_subjects")```
+
+
 3. Generate Subject Lines
-python
+`python
 from transformers import pipeline
 
 generator = pipeline("text-generation", model="./gpt2_enron_subjects", tokenizer="./gpt2_enron_subjects")
 prompt = "Please review the attached report by EOD. [SEP]"
 result = generator(prompt, max_length=40, num_return_sequences=1)
-print(result[0]["generated_text"])
+print(result[0]["generated_text"])`
 Hardware Recommendations
 Recommended: NVIDIA RTX 3060 or better for fast training.
 
