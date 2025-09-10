@@ -4,12 +4,12 @@
 A Python project to fine-tune GPT-2 for generating email subject lines from Enron-style datasets using Hugging Face Transformers.
 
 
-##**Project Motivation**
+## **Project Motivation**
 
 
 This project helps automate the generation of concise email subject lines from long email bodies using fine-tuned GPT-2. It is useful for improving email workflows, productivity apps, or text summarization research.
 
-##**Features**
+## **Features**
 
 1.Prepare large email datasets for NLP.
 
@@ -22,7 +22,7 @@ This project helps automate the generation of concise email subject lines from l
 **Technologies**: Python 3.12+, transformers (Hugging Face), pandas,torch,accelerate, datasets
 
 
-##**Dataset Preparation**
+## **Dataset Preparation**
 
 
 1.Place your raw dataset (e.g., emails.csv) in the project folder.
@@ -36,8 +36,8 @@ This project helps automate the generation of concise email subject lines from l
 **Installation**
 
     python -m pip install --upgrade transformers torch accelerate pandas datasets
-##**Usage**
-###**Step-by-step Workflow**
+## **Usage**
+### **Step-by-step Workflow**
 
 1. Prepare Data
    ``` python
@@ -106,7 +106,7 @@ prompt = "Please review the attached report by EOD. [SEP]"
 result = generator(prompt, max_length=40, num_return_sequences=1)
 print(result[0]["generated_text"])
 ```
-##**Hardware Recommendations**
+## **Hardware Recommendations**
 
 Recommended: NVIDIA RTX 3060 or better for fast training.
 
@@ -114,7 +114,7 @@ Minimum: Any CUDA-enabled GPU with 4GB+ VRAM, or risk much slower training on CP
 
 Large datasets (500k+ samples) may require long training times; consider batch adjustments and subset experiments.
 
-##**Troubleshooting**
+## **Troubleshooting**
 TypeError: unexpected keyword argument 'evaluation_strategy'
 Solution: Upgrade transformers with python -m pip install --upgrade transformers.
 
