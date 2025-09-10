@@ -1,4 +1,4 @@
-#**OpenRate Boost: Fine-Tune GPT-2 for Email Subject Generation**
+# **OpenRate Boost: Fine-Tune GPT-2 for Email Subject Generation**
 
 
 A Python project to fine-tune GPT-2 for generating email subject lines from Enron-style datasets using Hugging Face Transformers.
