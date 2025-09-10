@@ -61,7 +61,7 @@ trainer.train()
 # Save the fine-tuned model and tokenizer
 trainer.save_model("./gpt2_enron_subjects")
 tokenizer.save_pretrained("./gpt2_enron_subjects")
-
+print("Training completed and model saved.")
 
 # Generate email subject lines example
 loaded_model = GPT2LMHeadModel.from_pretrained("./gpt2_enron_subjects")
