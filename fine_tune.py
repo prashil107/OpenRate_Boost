@@ -31,16 +31,16 @@ os.makedirs("./logs", exist_ok=True)
 training_args = TrainingArguments(
     output_dir="./gpt2_enron_subjects",
     num_train_epochs=3,
-    per_device_train_batch_size=2,
-    per_device_eval_batch_size=2,
-    # evaluation_strategy="epoch",  # Removed unsupported argument
-    # save_strategy="epoch",        # Removed unsupported argument
+    per_device_train_batch_size=4,      # Start with 4, lower if needed
+    per_device_eval_batch_size=4,
+    gradient_accumulation_steps=2,      # Simulates effective batch size of 8 if you need larger batches
+    fp16=True,                          # Enables mixed precision (safe for RTX 3050)
+    save_strategy="epoch",
     logging_dir="./logs",
     logging_steps=50,
     save_total_limit=2,
-    report_to="none",  # Prevents logging errors if wandb or other integrations are not set up
-    fp16=False  # Set to False if not using GPU
 )
+
 
 model.config.pad_token_id = tokenizer.pad_token_id  # Set pad_token_id for training
 
