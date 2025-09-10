@@ -2,7 +2,7 @@ import os
 from transformers import GPT2Tokenizer, GPT2LMHeadModel, TrainingArguments, Trainer, DataCollatorForLanguageModeling, pipeline
 from datasets import load_dataset
 
-# Step 3: Tokenize the Data
+#Tokenize the Data
 tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
 tokenizer.pad_token = tokenizer.eos_token  # Set pad token
 
@@ -21,11 +21,11 @@ tokenized_train = dataset["train"].map(preprocess, batched=True)
 tokenized_test = dataset["test"].map(preprocess, batched=True)
 
 
-# Step 4: Load Pretrained GPT-2 Model
+# Load Pretrained GPT-2 Model
 model = GPT2LMHeadModel.from_pretrained("gpt2")
 model.resize_token_embeddings(len(tokenizer))  # Adjust for special tokens
 
-# Step 5: Setup Training Arguments and Trainer
+# Setup Training Arguments and Trainer
 os.makedirs("./gpt2_enron_subjects", exist_ok=True)
 os.makedirs("./logs", exist_ok=True)
 training_args = TrainingArguments(
@@ -55,7 +55,7 @@ trainer = Trainer(
 )
 
 
-# Step 6: Train the model
+# Train the model
 trainer.train()
 
 # Save the fine-tuned model and tokenizer
@@ -63,7 +63,7 @@ trainer.save_model("./gpt2_enron_subjects")
 tokenizer.save_pretrained("./gpt2_enron_subjects")
 
 
-# Step 7: Generate email subject lines example
+# Generate email subject lines example
 loaded_model = GPT2LMHeadModel.from_pretrained("./gpt2_enron_subjects")
 loaded_tokenizer = GPT2Tokenizer.from_pretrained("./gpt2_enron_subjects")
 generator = pipeline("text-generation", model=loaded_model, tokenizer=loaded_tokenizer)
