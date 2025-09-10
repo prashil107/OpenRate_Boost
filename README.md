@@ -1,33 +1,16 @@
 OpenRate Boost: Fine-Tune GPT-2 for Email Subject Generation
+
+
 A Python project to fine-tune GPT-2 for generating email subject lines from Enron-style datasets using Hugging Face Transformers.
 
-Table of Contents
-Project Motivation
-
-Features
-
-Technologies
-
-Dataset Preparation
-
-Installation
-
-Usage
-
-Step-by-step Workflow
-
-Hardware Recommendations
-
-Troubleshooting
-
-Contributing
-
-License
 
 Project Motivation
+
+
 This project helps automate the generation of concise email subject lines from long email bodies using fine-tuned GPT-2. It is useful for improving email workflows, productivity apps, or text summarization research.
 
 Features
+
 Prepare large email datasets for NLP.
 
 Fine-tune GPT-2 on custom email body/subject data.
