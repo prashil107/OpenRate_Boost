@@ -29,17 +29,15 @@ Dataset Preparation
 
 2.Convert CSV into plain text files for training/testing using:
 
-   Each line: [body text] [SEP] [subject line]
+   *Each line: [body text] [SEP] [subject line]
 
-   Use scripts provided (see data_prep.py for details).
+   *Use scripts provided (see data_prep.py for details).
 
 Installation
 
     python -m pip install --upgrade transformers torch accelerate pandas datasets
 Usage
-
-
-Step-by-step Workflow
+*Step-by-step Workflow
 
 1. Prepare Data
    ``` python
@@ -59,7 +57,7 @@ Step-by-step Workflow
 
 
 2. Fine-tune GPT-2
-`python
+```python
 from transformers import GPT2Tokenizer, GPT2LMHeadModel, TrainingArguments, Trainer, DataCollatorForLanguageModeling
 from datasets import load_dataset
 
@@ -95,17 +93,19 @@ trainer = Trainer(
 
 trainer.train()
 trainer.save_model("./gpt2_enron_subjects")
-tokenizer.save_pretrained("./gpt2_enron_subjects")```
+tokenizer.save_pretrained("./gpt2_enron_subjects")
+```
 
 
 3. Generate Subject Lines
-`python
+```python
 from transformers import pipeline
 
 generator = pipeline("text-generation", model="./gpt2_enron_subjects", tokenizer="./gpt2_enron_subjects")
 prompt = "Please review the attached report by EOD. [SEP]"
 result = generator(prompt, max_length=40, num_return_sequences=1)
-print(result[0]["generated_text"])`
+print(result[0]["generated_text"])
+```
 Hardware Recommendations
 Recommended: NVIDIA RTX 3060 or better for fast training.
 
