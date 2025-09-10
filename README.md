@@ -11,35 +11,27 @@ This project helps automate the generation of concise email subject lines from l
 
 Features
 
-Prepare large email datasets for NLP.
+1.Prepare large email datasets for NLP.
 
-Fine-tune GPT-2 on custom email body/subject data.
+2.Fine-tune GPT-2 on custom email body/subject data.
 
-Generate subject lines from new email text.
+3.Generate subject lines from new email text.
 
-Step-by-step scripts and troubleshooting guides.
+4.Step-by-step scripts and troubleshooting guides.
 
-Technologies
-Python 3.12+
+Technologies: Python 3.12+, transformers (Hugging Face), pandas,torch,accelerate, datasets
 
-transformers (Hugging Face)
-
-pandas
-
-torch
-
-accelerate
-
-datasets
 
 Dataset Preparation
-Place your raw dataset (e.g., emails.csv) in the project folder.
 
-Convert CSV into plain text files for training/testing using:
 
-Each line: [body text] [SEP] [subject line]
+1.Place your raw dataset (e.g., emails.csv) in the project folder.
 
-Use scripts provided (see data_prep.py for details).
+2.Convert CSV into plain text files for training/testing using:
+
+    Each line: [body text] [SEP] [subject line]
+
+    Use scripts provided (see data_prep.py for details).
 
 Installation
 text
